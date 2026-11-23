@@ -1,0 +1,11 @@
+# Fichiers créés par Windows / macOS
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Dossiers de dépendances (si un jour on utilise npm)
+node_modules/
+
+# Fichiers temporaires
+*.log
+*.tmp

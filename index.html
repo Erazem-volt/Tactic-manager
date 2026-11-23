@@ -7,7 +7,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css">
+<!-- NUMÉRO DE VERSION (?v=2) : à chaque mise en ligne importante, augmente ce
+     numéro (v=3, v=4…) ici ET sur les 8 scripts en bas de la page.
+     Le navigateur croit alors que ce sont de nouveaux fichiers et les recharge,
+     au lieu de garder les anciens en mémoire (le « cache »), surtout sur téléphone. -->
+<link rel="stylesheet" href="css/style.css?v=2">
 </head>
 <body>
 <div class="page">
@@ -206,13 +210,14 @@
   </aside>
 
 <!-- Les scripts sont chargés dans cet ordre (chaque fichier utilise les précédents) -->
-<script src="js/donnees/situations.js"></script>
-<script src="js/donnees/systemes.js"></script>
-<script src="js/moteur/1-terrain-et-animation.js"></script>
-<script src="js/moteur/2-souris-et-reactions.js"></script>
-<script src="js/moteur/3-analyse-des-passes.js"></script>
-<script src="js/moteur/4-placement-et-regles.js"></script>
-<script src="js/moteur/5-actions-tir-adversaire.js"></script>
-<script src="js/main.js"></script>
+<!-- ?v=2 : même numéro de version que style.css en haut de la page (à augmenter partout en même temps) -->
+<script src="js/donnees/situations.js?v=2"></script>
+<script src="js/donnees/systemes.js?v=2"></script>
+<script src="js/moteur/1-terrain-et-animation.js?v=2"></script>
+<script src="js/moteur/2-souris-et-reactions.js?v=2"></script>
+<script src="js/moteur/3-analyse-des-passes.js?v=2"></script>
+<script src="js/moteur/4-placement-et-regles.js?v=2"></script>
+<script src="js/moteur/5-actions-tir-adversaire.js?v=2"></script>
+<script src="js/main.js?v=2"></script>
 </body>
 </html>

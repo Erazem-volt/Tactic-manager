@@ -252,3 +252,41 @@ h2, h3, .carte-moi h3, .meilleure-passe b, #postes button, .lecture button { fon
 .outils button { background: #2f4a63; color: #fff; border: none; border-radius: 6px; padding: 6px 10px; }
 .lecture { justify-content: space-between; }
 .lecture .info-etape { color: #a9bccf; font-size: .9rem; }
+
+/* ===== Zoom du terrain : boutons ronds dans le coin en bas à droite ===== */
+.terrain-cadre { position: relative; }            /* les boutons se placent par rapport à ce cadre */
+.zoom-boutons { position: absolute; bottom: 8px; right: 8px; display: flex; gap: 6px;
+  -webkit-user-select: none; user-select: none; }
+.zoom-boutons button {
+  width: 40px; height: 40px; padding: 0; border-radius: 50%;
+  display: grid; place-items: center;
+  background: rgba(15, 29, 43, .85); color: var(--accent); border: 2px solid var(--accent);
+  font-family: "Inter", system-ui, sans-serif; font-size: 1.4rem; font-weight: 800; line-height: 1;
+}
+.zoom-boutons button:hover:not(:disabled) { background: var(--accent); color: var(--encre); }
+.zoom-boutons button:disabled { opacity: .35; cursor: default; }
+
+/* Sur écran tactile, un double-tap sur un bouton ne zoome pas la page
+   (le pincement à deux doigts reste possible partout ailleurs) */
+button, select { touch-action: manipulation; }
+
+/* ===== Téléphone (écran étroit) ===== */
+@media (max-width: 600px) {
+  .page { padding: 10px 8px 24px; }                /* marges plus fines : le terrain prend toute la largeur */
+  .logo { font-size: 1.6rem; }
+  #terrain { border-radius: 8px; }
+  /* Boutons assez grands pour le doigt (environ 44 px de haut) */
+  #postes button, .formats button, .btn-parametres,
+  .lecture button, .outils button, #etapes button { min-height: 44px; }
+  #etapes button { min-width: 44px; }
+  .lecture { gap: 6px; padding: 8px; }
+  .lecture button { padding: 8px 10px; font-size: .95rem; }
+  .lecture .info-etape { width: 100%; order: -1; text-align: center; }   /* « Étape 1/3 » sur sa propre ligne */
+  /* Les menus déroulants : texte de 16 px, sinon l'iPhone zoome la page tout seul quand on les touche */
+  .menu-haut select, .ligne-select select { font-size: 16px; min-height: 40px; max-width: 100%; }
+  .menu-haut label { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; width: 100%; }
+  .menu-haut select { flex: 1; margin-left: 0; }
+  .carte-situation { padding: 12px; }
+  .zoom-boutons { bottom: 4px; right: 4px; }
+  .zoom-boutons button { width: 40px; height: 40px; }
+}

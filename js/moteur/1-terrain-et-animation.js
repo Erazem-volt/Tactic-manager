@@ -344,6 +344,8 @@ function choisirSituation(i, sansAnimation) {
   document.querySelectorAll(".carte-situation").forEach(b => b.classList.toggle("actif", Number(b.dataset.index) === sit));
   // Le gros bouton au-dessus du terrain affiche le nom de la situation en cours
   document.getElementById("nom-situation").textContent = SITUATIONS[sit].titre;
+  // Nouvelle situation (ou nouveau système) : on revoit le terrain entier
+  remettreZoom();
   pause();
   p = 0;
   courant = JSON.parse(JSON.stringify(SITUATIONS[sit]));   // copie qu'on a le droit de modifier

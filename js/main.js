@@ -127,6 +127,8 @@ function demarrer() {
   svg.addEventListener("mousedown", (e) => e.preventDefault());
   svg.addEventListener("dblclick", (e) => { e.preventDefault(); window.getSelection().removeAllRanges(); });
   window.addEventListener("pointerup", finirGlisser);
+  // Zoom du terrain : deux doigts, molette, boutons + / − / recentrer
+  brancherZoom();
 
   document.addEventListener("keydown", (e) => {
     if (e.target.tagName === "SELECT") return;

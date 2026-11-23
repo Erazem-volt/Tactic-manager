@@ -428,7 +428,7 @@ const SITUATIONS = [
   // -------------------------------------------------------------------
   // Calculée automatiquement d'après les systèmes choisis dans le menu du haut
   {
-    titre: "Placement officiel des systèmes",
+    titre: "Placement de base",
     cle: "Le placement de base de chaque système, sur toute la longueur du terrain. Change de système dans le menu du haut.",
     roles: {},
     etapes: []

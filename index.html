@@ -50,11 +50,15 @@
   <p class="etape">① Choisis ton poste</p>
   <div id="postes"></div>
 
-  <p class="etape">② Choisis une situation de jeu</p>
-  <nav id="phases"></nav>
-
   <div class="grille">
     <section>
+      <!-- Gros bouton : affiche la situation en cours et ouvre le panneau des situations -->
+      <button id="btn-situations" class="btn-situations" aria-haspopup="dialog">
+        <span class="etiquette">Situation :</span>
+        <span id="nom-situation"></span>
+        <span class="fleche-ouvrir" aria-hidden="true">▸</span>
+      </button>
+
       <div class="recit"><span class="badge" id="badge-etape"></span><span id="recit"></span></div>
       <div id="auto-info" class="auto-info"></div>
 
@@ -105,6 +109,17 @@
   </div>
 </div>
 
+
+  <!-- ===== Panneau des situations (ouvert par le bouton « Situation : … ») ===== -->
+  <!-- Les cartes sont créées par demarrer() dans js/main.js -->
+  <div id="fond-situations" class="fond-parametres" hidden></div>
+  <aside id="situations" class="tiroir" hidden aria-label="Situations de jeu">
+    <div class="tiroir-tete">
+      <h2>Situations</h2>
+      <button id="btn-fermer-situations" class="btn-fermer" aria-label="Fermer">×</button>
+    </div>
+    <div id="liste-situations"></div>
+  </aside>
 
   <!-- ===== Panneau des paramètres (ouvert par la roue crantée) ===== -->
   <div id="fond-parametres" class="fond-parametres" hidden></div>

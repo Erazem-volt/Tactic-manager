@@ -14,18 +14,61 @@ function demarrer() {
     b.addEventListener("click", () => choisirPoste(poste));
     zonePostes.appendChild(b);
   }
-  const zonePhases = document.getElementById("phases");
-  SITUATIONS.forEach((s, i) => {
-    const b = document.createElement("button");
-    b.innerHTML = `<span class="num">${i + 1}</span>${s.titre}`;
-    b.addEventListener("click", () => choisirSituation(i));
-    zonePhases.appendChild(b);
+  // ---------- Panneau des situations ----------
+  // Numéro (dans SITUATIONS) de la situation « Placement de base »
+  const iPlacement = SITUATIONS.findIndex(s => s.titre === "Placement de base");
+
+  // Les 3 groupes de cartes, dans l'ordre d'affichage.
+  // Chaque groupe garde les situations qui répondent à sa condition.
+  const groupes = [
+    { titre: "Placement",          garder: (s, i) => i === iPlacement },
+    { titre: "Situations guidées", garder: (s) => s.ecrite },
+    { titre: "Jeu libre",          garder: (s, i) => !s.ecrite && i !== iPlacement }
+  ];
+
+  const panneauSit = document.getElementById("situations");
+  const fondSit = document.getElementById("fond-situations");
+  const listeSit = document.getElementById("liste-situations");
+
+  groupes.forEach((g) => {
+    // Petit titre du groupe
+    const h = document.createElement("h3");
+    h.textContent = g.titre;
+    listeSit.appendChild(h);
+    // Une carte cliquable par situation du groupe
+    SITUATIONS.forEach((s, i) => {
+      if (!g.garder(s, i)) return;
+      const carte = document.createElement("button");
+      carte.className = "carte-situation";
+      carte.dataset.index = i;   // on retrouve la situation grâce à ce numéro
+      carte.innerHTML = `<b>${s.titre}</b><span class="carte-desc">${s.cle}</span>` +
+        `<small class="carte-note">Écrite pour notre système : choisis « Notre système » pour la voir.</small>`;
+      // Choisir une carte : on ferme le panneau, puis on charge la situation
+      carte.addEventListener("click", () => { fermerSit(); choisirSituation(i); });
+      listeSit.appendChild(carte);
+    });
   });
+
+  // Ouvrir / fermer le panneau des situations (comme le panneau Paramètres)
+  const ouvrirSit = () => {
+    panneauSit.hidden = false; fondSit.hidden = false;
+    // On place le clavier sur la carte en cours (ou sur la croix)
+    (listeSit.querySelector(".carte-situation.actif") || document.getElementById("btn-fermer-situations")).focus();
+  };
+  const fermerSit = () => {
+    if (panneauSit.hidden) return;
+    panneauSit.hidden = true; fondSit.hidden = true;
+    document.getElementById("btn-situations").focus();
+  };
+  document.getElementById("btn-situations").addEventListener("click", ouvrirSit);
+  document.getElementById("btn-fermer-situations").addEventListener("click", fermerSit);
+  fondSit.addEventListener("click", fermerSit);   // clic sur le fond sombre
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape") fermerSit(); });
 
   // Systèmes de jeu
   const changerSysteme = () => {
     appliquerSysteme();
-    choisirSituation(SITUATIONS.findIndex(s => s.titre.startsWith("Placement officiel")));
+    choisirSituation(iPlacement);
   };
   document.getElementById("sel-systeme").addEventListener("change", changerSysteme);
   document.getElementById("sel-systeme-adv").addEventListener("change", changerSysteme);
@@ -88,6 +131,7 @@ function demarrer() {
   document.addEventListener("keydown", (e) => {
     if (e.target.tagName === "SELECT") return;
     if (!document.getElementById("parametres").hidden) return;   // panneau des paramètres ouvert
+    if (!document.getElementById("situations").hidden) return;   // panneau des situations ouvert
     if (e.key === "ArrowRight") allerEtape(Math.floor(p) + 1);
     if (e.key === "ArrowLeft") allerEtape(Math.ceil(p - 0.0001) - 1);
     if (e.key === " ") { e.preventDefault(); enLecture ? pause() : jouer(); }
@@ -96,7 +140,8 @@ function demarrer() {
   });
 
   appliquerSysteme();
-  choisirSituation(0);
+  // Au démarrage : « Placement de base », étape 1, sans lancer l'animation
+  choisirSituation(iPlacement, true);
 }
 
 demarrer();

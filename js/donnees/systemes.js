@@ -218,8 +218,8 @@ function genererSituationsLibres() {
   if (!engE.rolesOrig) engE.rolesOrig = engE.roles;
   engE.roles = roles || engE.rolesOrig;
 
-  // 11. Placement officiel des deux systèmes
-  const off = trouver("Placement officiel");
+  // 11. Placement de base des deux systèmes
+  const off = trouver("Placement de base");
   const sN = SYSTEMES[nousId], sE = SYSTEMES[systemeEux()];
   const lignes = (s) => {
     const c = { D: 0, M: 0, A: 0 };
@@ -228,9 +228,9 @@ function genererSituationsLibres() {
   };
   const nOff = {}; for (const k in sN.places) nOff[k] = [...sN.places[k].base];
   off.etapes = [
-    { txt: `Notre placement officiel : ${sN.titre}. ${sN.resume} (${lignes(sN)}).`, b: "GB", vue: "nous",
+    { txt: `Notre placement de base : ${sN.titre}. ${sN.resume} (${lignes(sN)}).`, b: "GB", vue: "nous",
       n: nOff, e: placementRouge(1, 0) },
-    { txt: `Placement officiel de l'adversaire : ${sE.titre}. ${sE.resume} (${lignes(sE)}).`, b: "e0", vue: "eux",
+    { txt: `Placement de base de l'adversaire : ${sE.titre}. ${sE.resume} (${lignes(sE)}).`, b: "e0", vue: "eux",
       n: nOff, e: placementRouge(1, 0) },
     { txt: `Face à face : chaque équipe dans sa moitié, avant le coup d'envoi. ${sN.titre} (bleu) contre ${sE.titre} (rouge).`, b: "GB", vue: "les2",
       n: placementBleu(0.6, 47), e: placementRouge(0.6, 50.5).map(horsDuRond).map(p => [Math.max(p[0], 50.5), p[1]]) }
@@ -248,9 +248,11 @@ function appliquerSysteme() {
   // liste « Ballon à »
   document.querySelectorAll("#sel-ballon option").forEach(o => { if (o.value) o.textContent = POSTES[o.value]; });
   // les situations 1 à 6 sont écrites pour NOTRE système
+  // Les cartes du panneau « Situations » portent leur numéro dans data-index.
+  // Si on n'est pas sur « Notre système », les situations 1 à 6 sont grisées (désactivées).
   const ecrites = systemeNous() === "nous";
-  document.querySelectorAll("#phases button").forEach((b, i) => {
-    const sitEcrite = SITUATIONS[i].ecrite;
+  document.querySelectorAll(".carte-situation").forEach((b) => {
+    const sitEcrite = SITUATIONS[Number(b.dataset.index)].ecrite;
     b.disabled = sitEcrite && !ecrites;
     b.title = b.disabled ? "Situation écrite pour notre système : choisis « Notre système » pour la voir" : "";
   });

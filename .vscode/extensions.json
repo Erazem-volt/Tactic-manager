@@ -1,0 +1,7 @@
+{
+  // Extensions conseillées : VS Code te proposera de les installer à l'ouverture du dossier
+  "recommendations": [
+    "ritwickdey.liveserver",
+    "esbenp.prettier-vscode"
+  ]
+}

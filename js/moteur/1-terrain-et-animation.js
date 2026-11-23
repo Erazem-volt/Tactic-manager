@@ -336,15 +336,19 @@ function choisirPoste(poste) {
   dessiner();
 }
 
-function choisirSituation(i) {
+// sansAnimation = true : on affiche juste l'étape 1, sans lancer la lecture (utilisé au démarrage)
+function choisirSituation(i, sansAnimation) {
   arreterReaction();
   sit = (i + SITUATIONS.length) % SITUATIONS.length;
-  document.querySelectorAll("#phases button").forEach((b, j) => b.classList.toggle("actif", j === sit));
+  // Dans le panneau « Situations », la carte en cours prend la couleur d'accent (classe "actif")
+  document.querySelectorAll(".carte-situation").forEach(b => b.classList.toggle("actif", Number(b.dataset.index) === sit));
+  // Le gros bouton au-dessus du terrain affiche le nom de la situation en cours
+  document.getElementById("nom-situation").textContent = SITUATIONS[sit].titre;
   pause();
   p = 0;
   courant = JSON.parse(JSON.stringify(SITUATIONS[sit]));   // copie qu'on a le droit de modifier
   construire();
-  if (nbSegments() > 0) jouer(); else { dessiner(); planifierAuto(); }
+  if (nbSegments() > 0 && !sansAnimation) jouer(); else { dessiner(); planifierAuto(); }
 }
 
 function appliquerOptions() {
